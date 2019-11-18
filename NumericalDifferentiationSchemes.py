@@ -38,48 +38,49 @@ class Forward3(Diff):
         f,h = self.f,self.h
         return (-(1/6)*f(x+2*h) + f(x+h) - 0.5*f(x) - (1/3)*f(x-h))/h
 
-diffschemeF = Forward1(np.sin, h=1.0E-5)
-diffschemeB = Backward1(np.sin, h=1.0E-5)
-diffschemeC = Central2(np.sin, h=1.0E-5)
-diffschemeC4 = Central4(np.sin, h=1.0E-5)
-diffschemeC6 = Central6(np.sin, h=1.0E-5)
-diffschemeF3 = Forward3(np.sin, h=1.0E-5)
+#############################################################################################################
+    
+if __name__ == '__main__':
+    diffschemeF = Forward1(np.sin, h=1.0E-5)
+    diffschemeB = Backward1(np.sin, h=1.0E-5)
+    diffschemeC = Central2(np.sin, h=1.0E-5)
+    diffschemeC4 = Central4(np.sin, h=1.0E-5)
+    diffschemeC6 = Central6(np.sin, h=1.0E-5)
+    diffschemeF3 = Forward3(np.sin, h=1.0E-5)
 
-diffschemeF(np.pi)
-diffschemeB(np.pi)
-diffschemeC(np.pi)
-diffschemeC4(np.pi)
-diffschemeC6(np.pi)
-diffschemeF3(np.pi)
+    diffschemeF(np.pi)
+    diffschemeB(np.pi)
+    diffschemeC(np.pi)
+    diffschemeC4(np.pi)
+    diffschemeC6(np.pi)
+    diffschemeF3(np.pi)
 
-def test_Central2():
-    def f(x):
-        return (a*np.cos(x)**2)*(b*np.sin(x))
-    def exact(x):
-        return np.cos(x)**3 - 2*np.cos(x)*(np.sin(x)**2)
+    def test_Central2():
+        def f(x):
+            return (a*np.cos(x)**2)*(b*np.sin(x))
+        def exact(x):
+            return np.cos(x)**3 - 2*np.cos(x)*(np.sin(x)**2)
 
-    a,b = 1.0,1.0
-    diffscheme = Central2(f, h=1.0E-5)
-    vecdiffscheme = np.vectorize(diffscheme)
-    i = np.arange(0,10,0.1)
-    numdiff = vecdiffscheme(i)
-    # numdiff = [diffscheme(j) for j in i]
-    exactdiffval = exact(i)
-    plt.plot(i,numdiff,'bo',i,exactdiffval,'k-')
-    plt.show()
+        a,b = 1.0,1.0
+        diffscheme = Central2(f, h=1.0E-5)
+        vecdiffscheme = np.vectorize(diffscheme)
+        i = np.arange(0,10,0.1)
+        numdiff = vecdiffscheme(i)
+        # numdiff = [diffscheme(j) for j in i]
+        exactdiffval = exact(i)
+        plt.plot(i,numdiff,'bo',i,exactdiffval,'k-')
+        plt.show()
 
-def _test_one_method(method):
-    """ Test method in string 'method' on a some function """
-    a,b = 1.0,1.0
-    p = np.pi
-    f = lambda x : (a*np.cos(x)**2)*(b*np.sin(x))
-    exact = lambda x : np.cos(x)**3 - 2*np.cos(x)*(np.sin(x)**2)
-    m = eval(method)(f)
-    return m(p), abs(exact(p) - m(p))
+    def _test_one_method(method):
+        """ Test method in string 'method' on a some function """
+        a,b = 1.0,1.0
+        p = np.pi
+        f = lambda x : (a*np.cos(x)**2)*(b*np.sin(x))
+        exact = lambda x : np.cos(x)**3 - 2*np.cos(x)*(np.sin(x)**2)
+        m = eval(method)(f)
+        return m(p), abs(exact(p) - m(p))
 
+    test_Central2()
+    print({key : _test_one_method(key) for key in ['Forward1','Backward1','Central2',\
+    'Central4','Central6','Forward3']})
 
-
-test_Central2()
-
-{key : _test_one_method(key) for key in ['Forward1','Backward1','Central2',\
-    'Central4','Central6','Forward3']}
