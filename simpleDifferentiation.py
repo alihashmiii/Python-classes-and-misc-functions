@@ -38,7 +38,7 @@ func = MyFunc(3)
 func.df(4)
 func.ddf(4)
 
-# test: .df and .ddf methods in MyComplicatedFunc will call superclass
+# test: .df and .ddf methods of MyComplicatedFunc are from the superclass
 f = MyComplicatedFunc(1, 1, 1, h=1.0E-5)
 x = np.pi/2;
 f(x)
