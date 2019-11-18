@@ -68,4 +68,18 @@ def test_Central2():
     plt.plot(i,numdiff,'bo',i,exactdiffval,'k-')
     plt.show()
 
+def _test_one_method(method):
+    """ Test method in string 'method' on a some function """
+    a,b = 1.0,1.0
+    p = np.pi
+    f = lambda x : (a*np.cos(x)**2)*(b*np.sin(x))
+    exact = lambda x : np.cos(x)**3 - 2*np.cos(x)*(np.sin(x)**2)
+    m = eval(method)(f)
+    return m(p), abs(exact(p) - m(p))
+
+
+
 test_Central2()
+
+{key : _test_one_method(key) for key in ['Forward1','Backward1','Central2',\
+    'Central4','Central6','Forward3']}
