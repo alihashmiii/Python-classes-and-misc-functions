@@ -25,21 +25,18 @@ class Central2(Diff):
 class Central4(Diff):
     def __call__(self,x):
         f,h = self.f,self.h
-        return (4/3)*(f(x+h) - f(x-h))/(2*h) - \
-                (1/3)*(f(x+2*h)-f(x-2*h))/(4*h)
+        return (4/3)*(f(x+h) - f(x-h))/(2*h) - (1/3)*(f(x+2*h)-f(x-2*h))/(4*h)
 
 class Central6(Diff):
     def __call__(self,x):
         f,h = self.f,self.h
-        return (3/2)*(f(x+h)-f(x-h))/(2*h) - \
-               (3/5)*(f(x+2*h)-f(x-2*h))/(4*h) + \
+        return (3/2)*(f(x+h)-f(x-h))/(2*h) - (3/5)*(f(x+2*h)-f(x-2*h))/(4*h) + \
                (1/10)*(f(x+3*h)-f(x-3*h))/(6*h)
 
 class Forward3(Diff):
     def __call__(self,x):
         f,h = self.f,self.h
-        return (-(1/6)*f(x+2*h) + f(x+h) - 0.5*f(x) - \
-               (1/3)*f(x-h))/h
+        return (-(1/6)*f(x+2*h) + f(x+h) - 0.5*f(x) - (1/3)*f(x-h))/h
 
 diffschemeF = Forward1(np.sin, h=1.0E-5)
 diffschemeB = Backward1(np.sin, h=1.0E-5)
