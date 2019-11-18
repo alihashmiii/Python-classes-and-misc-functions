@@ -24,17 +24,21 @@ class MyFunc(FuncwithDerivative):
     def ddf(self,x): # polymorphic behaviour .. method overide. subclass method will not call superclass method
         return -self.a*self.a*np.cos(self.a*x)+6*x
 
-func = MyFunc(3)
-func.df(4)
-func.ddf(4)
 
-class MyComplicatedFunc(FuncwithDerivative):
+    class MyComplicatedFunc(FuncwithDerivative):
     def __init__(self,p,q,r,h):
         FuncwithDerivative.__init__(self,h=1.0E-5)
         self.p,self.q,self.r = p,q,r
     def __call__(self,x):
         return np.log(abs(self.p*np.tanh(self.q*x*np.cos(self.r*x))))
+    
+    
+# test: .df and .ddf methods in MyFunc will `not` call superclass
+func = MyFunc(3)
+func.df(4)
+func.ddf(4)
 
+# test: .df and .ddf methods in MyComplicatedFunc will call superclass
 f = MyComplicatedFunc(1, 1, 1, h=1.0E-5)
 x = np.pi/2;
 f(x)
