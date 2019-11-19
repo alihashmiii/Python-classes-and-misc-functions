@@ -1,1 +1,1 @@
-# Python-misc-func-and-classes
+# Python classes and miscellaneous functions
